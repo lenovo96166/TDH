@@ -6,8 +6,6 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 
-using Microsoft.Office.Interop.Excel;
-using Excel = Microsoft.Office.Interop.Excel;
 
 /// <summary>
 ///ModelAction 的摘要说明
@@ -15,14 +13,14 @@ using Excel = Microsoft.Office.Interop.Excel;
 public class ModelAction
 {
     //读取数据
-
     public List<Model> ReadDataToExcel(string path, int pageNum ,string Type,string condition) 
     {
         List<Model> list = new List<Model>();
         GoodsFile goodsFile = new GoodsFile();
         List<FileInformation> filesList = goodsFile.GetAllFiles(new DirectoryInfo(path));
 
-        //int count = ExcelCount(filesList);
+        //获取数据源总行数
+        int count = ExcelCount(filesList);
         
         foreach(FileInformation fileInormation in filesList)
         {
@@ -112,27 +110,33 @@ public class ModelAction
         string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" + Path + ";" + "Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
         OleDbConnection conn = new OleDbConnection(strConn);
         conn.Open();
-        string strExcel = "";
         OleDbDataAdapter myCommand = null;
         DataSet ds = null;
-        strExcel = "select * from [Page1$]";
-        myCommand = new OleDbDataAdapter(strExcel, strConn);
+        //string strExcel = "select * from [Page1$]";
+        myCommand = new OleDbDataAdapter(sql, strConn);
         ds = new DataSet();
         myCommand.Fill(ds, "table1");
         return ds;
     }
 
-    //根据SQL获取商品信息 . 测试后此方法低效,弃用！
-    [Obsolete]
+    //根据SQL获取商品信息  [Obsolete]
+    //
     public int ExcelCount(List<FileInformation> filesList)
     {
         int count = 0;
+        string sql = "select count(*) from [Page1$]";
+        DataSet ds = new DataSet();
         foreach (FileInformation fileInormation in filesList)
         {
-            count = count + ExcelToDS(fileInormation.FilePath).Tables[0].Rows.Count;
+            ds = ExcelToDS(fileInormation.FilePath, sql);
+            count = count + int.Parse(ds.Tables[0].Rows[0].ItemArray[0].ToString());
         }
         return count;
     }
+
+   
+
+
 
 
 }

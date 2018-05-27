@@ -17,7 +17,7 @@
 
     <body>
         <div class="container">
-            <div class="navbar navbar-fixed-top" style="margin-left:50px;margin-top:3%;">
+            <div class="navbar navbar-fixed-top" style="margin-left:50px;margin-top:2%;">
                 <form id="form1" runat="server" action="Index.aspx?action=search" method="post">
                     <div class="control-group">
                         <label class="control-label" for="inputIcon"> </label>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="row">
-                <ul class="thumbnails" style="margin:0px auto;margin-top:5%;">
+                <ul class="thumbnails" style="margin:0px auto;margin-top:7%;">
                     <% foreach (var model in modelList){ %>
                         <li class="span3">
                             <div class="thumbnail">
