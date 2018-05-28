@@ -1,18 +1,17 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Index.aspx.cs" Inherits="Index" %>
     <!DOCTYPE html>
     <html lang="en">
-
     <head id="Head1" runat="server">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
         <title>淘得好首页</title>
-        <script src="http://code.jquery.com/jquery.js"></script>
-        <script src="JS/Main.js"></script>
-        <script src="https://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
-        <link href="https://cdn.bootcss.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn.bootcss.com/bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet">
-        <link href="CSS/main.css" rel="stylesheet">
+        <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+        <script type="text/javascript" src="JS/Main.js"></script>
+        <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <link href="https://cdn.bootcss.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdn.bootcss.com/bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+        <link href="CSS/main.css" rel="stylesheet"/>
     </head>
 
     <body>
@@ -41,7 +40,7 @@
                         <li class="span3">
                             <div class="thumbnail">
                                 <a href="<%= model.TaobaoLink%>" class="thumbnail">
-                                    <img data-src="holder.js/260x180" alt="<%= model.GoodsName%>" src="<%= model.GoodsMainPhoto%>" width="260px" height="180px">
+                                    <img  alt="<%= model.GoodsName%>" src="<%= model.GoodsMainPhoto%>" width="260px" height="180px"/>
                                 </a>
                                 <p>
                                     <a href="<%= model.TaobaoLink%>">
@@ -75,7 +74,8 @@
                     <li>
                         <a href="Index.aspx?pageNum=<%=pageNum-1 %>&sc=<%=sc %>">上一页</a>
                     </li>
-                    <% for(int i=1 ; i<= pageAll; i++){ %>
+                    <% for (int i = 1; i <= pageCountOneScream; i++)
+                       { %>
                         <li>
                             <a href="Index.aspx?pageNum=<%=i %>&sc=<%=sc %>">
                                 <%=i %>

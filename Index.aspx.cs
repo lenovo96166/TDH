@@ -9,13 +9,17 @@ public partial class Index : System.Web.UI.Page
 {
     public List<Model> modelList = new List<Model>();
 
+    //起始页数
     public int pageNum = 1;
 
+    //每屏商品数
     public int pageCount = 50;
 
+    //搜索条件
     public string sc;
 
-    public int pageAll = 20;
+    //每屏页数
+    public int pageCountOneScream = 20;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -28,12 +32,15 @@ public partial class Index : System.Web.UI.Page
         absolutePaht = absolutePaht + "//Data";
         ModelAction modelAction = new ModelAction();
 
+        //总商品数
+        int allGoodsCount = modelAction.ExcelCount(absolutePaht);
+
         if (Request["action"] == "search")
         {
             string condition = Request.Form["searchCondition"];
             sc = condition;
             modelList = modelAction.ReadDataToExcel(absolutePaht, pageNum, "S", condition);
-            pageAll = modelList.Count / 50 > 20 ? 20 : modelList.Count / 50;
+            pageCountOneScream = modelList.Count / 50 > 20 ? 20 : modelList.Count / 50;
             return;
         }
 
@@ -42,21 +49,21 @@ public partial class Index : System.Web.UI.Page
             string condition = Request.Form["searchCondition"];
             sc = Request["sc"];
             modelList = modelAction.ReadDataToExcel(absolutePaht, pageNum, "S", Request["sc"]);
-            pageAll = modelList.Count > 20 ? 20 : modelList.Count;
+            pageCountOneScream = modelList.Count > 20 ? 20 : modelList.Count;
             return;
         }
 
         if (Request["action"] == "lucky") 
         {
             Random random = new Random();
-            pageNum = random.Next(1, 199);
+            pageNum = random.Next(1, allGoodsCount/50);
             modelList = modelAction.ReadDataToExcel(absolutePaht, pageNum, "", "");
-            pageAll = modelList.Count > 20 ? 20 : modelList.Count;
+            pageCountOneScream = modelList.Count > 20 ? 20 : modelList.Count;
             return;
         }
 
         modelList = modelAction.ReadDataToExcel(absolutePaht, pageNum, "", "");
 
-        pageAll = modelList.Count > 20 ? 20 : modelList.Count;
+        pageCountOneScream = modelList.Count > 20 ? 20 : modelList.Count;
     }
 }

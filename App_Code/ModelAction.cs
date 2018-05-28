@@ -12,19 +12,22 @@ using System.IO;
 /// </summary>
 public class ModelAction
 {
+
+    public GoodsFile goodsFile = new GoodsFile();
+
     //读取数据
     public List<Model> ReadDataToExcel(string path, int pageNum ,string Type,string condition) 
     {
         List<Model> list = new List<Model>();
-        GoodsFile goodsFile = new GoodsFile();
-        List<FileInformation> filesList = goodsFile.GetAllFiles(new DirectoryInfo(path));
 
-        //获取数据源总行数
-        int count = ExcelCount(filesList);
+        //获取文件List
+        List<FileInformation> filesList = goodsFile.GetAllFiles(new DirectoryInfo(path));
         
         foreach(FileInformation fileInormation in filesList)
         {
-            list = getGoodsInfoList(fileInormation);
+            List<Model> listTemp = new List<Model>();
+            listTemp = getGoodsInfoList(fileInormation);
+            list.AddRange(listTemp);
         }
 
         if (Type.Equals("S"))
@@ -121,8 +124,9 @@ public class ModelAction
 
     //根据SQL获取商品信息  [Obsolete]
     //
-    public int ExcelCount(List<FileInformation> filesList)
+    public int ExcelCount(string path)
     {
+        List<FileInformation> filesList = goodsFile.GetAllFiles(new DirectoryInfo(path));
         int count = 0;
         string sql = "select count(*) from [Page1$]";
         DataSet ds = new DataSet();
